@@ -114,8 +114,44 @@ p {
     margin: 0 auto 20px;
 }
 
+/* Melhorias para a seção da dobra 6 */
 .section-image {
-    max-height: 300px;
+    max-height: 350px;
     width: 100%;
-    object-fit: cover;
+    object-fit: contain;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Alinhamento vertical das colunas */
+.container .row {
+    align-items: center;
+}
+
+/* Estilo específico para a dobra 6 se precisar de mais controle */
+.dobra-6-section .row {
+    align-items: center;
+    min-height: 400px;
+}
+
+.dobra-6-section .col-md-6 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Ajustes responsivos */
+@media (max-width: 768px) {
+    .section-image {
+        max-height: 280px;
+        margin-bottom: 30px;
+    }
+    
+    .dobra-6-section .row {
+        min-height: auto;
+    }
+    
+    .dobra-6-section .col-md-6 {
+        margin-bottom: 20px;
+    }
 }
