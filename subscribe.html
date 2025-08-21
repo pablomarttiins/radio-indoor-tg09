@@ -8,119 +8,405 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Sora:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        :root {
+            --primary-color: #E94446;
+            --dark-color: #000000;
+            --white-color: #FFFFFF;
+            --light-gray-color: #F5F5F5;
+            --font-primary: 'Montserrat', 'Helvetica Neue', sans-serif;
+            --font-secondary: 'Sora', 'Roboto', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-secondary);
+            background-color: #1a1a1a;
+            background-image: 
+                linear-gradient(45deg, rgba(233, 68, 70, 0.1) 1px, transparent 1px),
+                linear-gradient(-45deg, rgba(233, 68, 70, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(233, 68, 70, 0.05) 1px, transparent 1px),
+                linear-gradient(0deg, rgba(233, 68, 70, 0.05) 1px, transparent 1px);
+            background-size: 80px 80px, 80px 80px, 40px 40px, 40px 40px;
+            background-position: 0 0, 0 0, 0 0, 0 0;
+            background-attachment: fixed;
+            color: var(--dark-color);
+            position: relative;
+        }
+
+        /* Additional subtle overlay for depth */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(233, 68, 70, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(233, 68, 70, 0.03) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        section {
+            padding: 60px 0;
+            background: rgba(255,255,255,0.95);
+            margin: 20px 0;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+
+        header {
+            background: rgba(255,255,255,0.98);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            margin: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            padding: 20px 0;
+        }
+
+        /* Animação para botões */
+        .btn-primary {
+            background: linear-gradient(45deg, var(--primary-color), #ff6b6b);
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 50px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            animation: pulse-glow 2s infinite;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            transition: all 0.3s ease;
+            transform: translate(-50%, -50%);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(233, 68, 70, 0.4);
+            background: linear-gradient(45deg, #ff6b6b, var(--primary-color));
+        }
+
+        .btn-primary:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(233, 68, 70, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 30px rgba(233, 68, 70, 0.7);
+            }
+        }
+
+        /* Título principal */
+        h1 {
+            font-family: var(--font-primary);
+            font-size: 42px;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary-color), #ff6b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            line-height: 1.2;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-family: var(--font-primary);
+            color: var(--primary-color);
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        /* Animações de entrada */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 1s ease-out;
+        }
+
+        .slide-in-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 1s ease-out;
+        }
+
+        .slide-in-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .scale-in {
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 1s ease-out;
+        }
+
+        .scale-in.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Form styling */
+        .form-control {
+            border-radius: 10px;
+            border: 2px solid #e0e0e0;
+            padding: 12px 15px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 15px rgba(233, 68, 70, 0.2);
+        }
+
+        .form-check-input:checked {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        /* Calculation display */
+        #valor_mensal, #valor_total {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 20px;
+        }
+
+        /* Alert styling */
+        .alert-warning {
+            background: linear-gradient(135deg, rgba(255, 193, 7, 0.1), rgba(255, 193, 7, 0.05));
+            border: 1px solid #ffc107;
+            border-radius: 15px;
+        }
+
+        footer {
+            background: rgba(245,245,245,0.95);
+            backdrop-filter: blur(10px);
+            padding: 40px 0;
+            margin-top: 60px;
+            border-radius: 15px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 28px;
+            }
+
+            section {
+                padding: 32px 0;
+                margin: 10px;
+            }
+        }
+
+        /* Enhanced form sections */
+        .form-section {
+            background: rgba(255,255,255,0.8);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border-left: 4px solid var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .form-section:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .calculation-display {
+            background: linear-gradient(135deg, rgba(233, 68, 70, 0.1), rgba(255, 107, 107, 0.05));
+            padding: 25px;
+            border-radius: 15px;
+            border: 2px solid var(--primary-color);
+            text-align: center;
+        }
+
+        /* Back link styling */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: #ff6b6b;
+            transform: translateX(-5px);
+        }
+
+        .back-link i {
+            margin-right: 8px;
+        }
+    </style>
 </head>
 <body>
 
-    <header class="container-fluid">
+    <header class="container-fluid slide-in-left">
         <div class="container">
-            <a href="index.html">Voltar para o início</a>
+            <a href="index.html" class="back-link">
+                <i class="bi bi-arrow-left"></i>
+                Voltar para o início
+            </a>
         </div>
     </header>
 
-    <section class="container">
-        <div class="text-center">
+    <section class="container fade-in">
+        <div class="text-center scale-in">
             <h1>Assine agora sua Rádio TG09 Indoor</h1>
-            <p>Escolha o plano, informe os dados e aceite os termos. Após envio, você receberá o contrato com os boletos. A rádio será ativada somente após o pagamento do primeiro boleto.</p>
+            <p class="lead">Escolha o plano, informe os dados e aceite os termos. Após envio, você receberá o contrato com os boletos. A rádio será ativada somente após o pagamento do primeiro boleto.</p>
         </div>
 
         <form id="subscribeForm" action="send_email.php" method="POST">
             <div class="row">
-                <div class="col-md-6">
-                    <h2>1. Seleção do Plano</h2>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="plano" id="plano6" value="6" required>
-                        <label class="form-check-label" for="plano6">
-                            Plano de 6 meses
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="plano" id="plano12" value="12">
-                        <label class="form-check-label" for="plano12">
-                            Plano de 12 meses
-                        </label>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <h2>2. Seleção da quantidade de lojas</h2>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="lojas_tipo" id="matriz" value="matriz" checked>
-                        <label class="form-check-label" for="matriz">
-                            Apenas a matriz
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="lojas_tipo" id="filiais" value="filiais">
-                        <label class="form-check-label" for="filiais">
-                            Matriz + 
-                        </label>
-                        <input type="number" name="num_filiais" id="num_filiais" min="1" value="1"> filiais
+                <div class="col-md-6 slide-in-left">
+                    <div class="form-section">
+                        <h2><i class="bi bi-calendar-check"></i> 1. Seleção do Plano</h2>
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="radio" name="plano" id="plano6" value="6" required>
+                            <label class="form-check-label" for="plano6">
+                                <strong>Plano de 6 meses</strong>
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="plano" id="plano12" value="12">
+                            <label class="form-check-label" for="plano12">
+                                <strong>Plano de 12 meses</strong>
+                            </label>
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="row mt-4">
-                <div class="col-md-12">
-                    <h2>3. Cálculo automático</h2>
-                    <p>Valor mensal: <span id="valor_mensal">R$ 200,00</span></p>
-                    <p>Valor total do plano: <span id="valor_total">R$ 1200,00</span></p>
-                </div>
-            </div>
-
-            <div class="row mt-4">
-                <div class="col-md-12">
-                    <h2>4. Formulário de dados obrigatórios</h2>
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <input type="text" name="nome_empresa" class="form-control" placeholder="Nome da empresa" required>
+                <div class="col-md-6 slide-in-right">
+                    <div class="form-section">
+                        <h2><i class="bi bi-shop"></i> 2. Seleção da quantidade de lojas</h2>
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="radio" name="lojas_tipo" id="matriz" value="matriz" checked>
+                            <label class="form-check-label" for="matriz">
+                                <strong>Apenas a matriz</strong>
+                            </label>
                         </div>
-                        <div class="col-md-6 mb-3">
-                            <input type="text" name="nome_responsavel" class="form-control" placeholder="Nome do responsável legal" required>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <input type="text" name="cpf" class="form-control" placeholder="CPF" required>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <input type="text" name="cnpj" class="form-control" placeholder="CNPJ" required>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <input type="text" name="whatsapp" class="form-control" placeholder="WhatsApp com DDD" required>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <input type="email" name="email" class="form-control" placeholder="E-mail" required>
-                        </div>
-                        <div class="col-md-12 mb-3">
-                            <input type="text" name="endereco" class="form-control" placeholder="Endereço completo" required>
+                        <div class="form-check d-flex align-items-center">
+                            <input class="form-check-input me-2" type="radio" name="lojas_tipo" id="filiais" value="filiais">
+                            <label class="form-check-label me-2" for="filiais">
+                                <strong>Matriz + </strong>
+                            </label>
+                            <input type="number" name="num_filiais" id="num_filiais" min="1" value="1" class="form-control" style="width: 80px; display: inline-block;">
+                            <span class="ms-2"><strong>filiais</strong></span>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="row mt-4">
-                <div class="col-md-12">
-                    <h2>5. Aceite do contrato</h2>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="termos" value="aceito" id="termos" required>
-                        <label class="form-check-label" for="termos">
-                            Li e concordo com os <a href="#">termos do contrato de prestação de serviço</a> da Rádio TG09 Indoor.
-                        </label>
+                <div class="col-md-12 scale-in">
+                    <div class="calculation-display">
+                        <h2><i class="bi bi-calculator"></i> 3. Cálculo automático</h2>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="mb-2">Valor mensal:</p>
+                                <p class="h3" id="valor_mensal">R$ 200,00</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="mb-2">Valor total do plano:</p>
+                                <p class="h3" id="valor_total">R$ 1.200,00</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="row mt-4">
-                <div class="col-md-12 text-center">
-                    <button type="submit" class="btn btn-primary">Enviar dados</button>
+                <div class="col-md-12 fade-in">
+                    <div class="form-section">
+                        <h2><i class="bi bi-person-fill"></i> 4. Formulário de dados obrigatórios</h2>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <input type="text" name="nome_empresa" class="form-control" placeholder="Nome da empresa" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <input type="text" name="nome_responsavel" class="form-control" placeholder="Nome do responsável legal" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <input type="text" name="cpf" class="form-control" placeholder="CPF" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <input type="text" name="cnpj" class="form-control" placeholder="CNPJ" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <input type="text" name="whatsapp" class="form-control" placeholder="WhatsApp com DDD" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <input type="email" name="email" class="form-control" placeholder="E-mail" required>
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <input type="text" name="endereco" class="form-control" placeholder="Endereço completo" required>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div id="form-messages"></div>
+            <div class="row mt-4">
+                <div class="col-md-12 slide-in-left">
+                    <div class="form-section">
+                        <h2><i class="bi bi-shield-check"></i> 5. Aceite do contrato</h2>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="termos" value="aceito" id="termos" required>
+                            <label class="form-check-label" for="termos">
+                                Li e concordo com os <a href="#" style="color: var(--primary-color);">termos do contrato de prestação de serviço</a> da Rádio TG09 Indoor.
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <div class="row mt-4">
-                <div class="col-md-12">
+                <div class="col-md-12 text-center scale-in">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-send"></i> Enviar dados
+                    </button>
+                </div>
+            </div>
+
+            <div id="form-messages" class="mt-4"></div>
+
+            <div class="row mt-4">
+                <div class="col-md-12 fade-in">
                     <div class="alert alert-warning" role="alert">
-                        ⚠️ A Rádio TG09 só será ativada após a compensação do primeiro boleto. O plano escolhido possui duração mínima de 6 ou 12 meses, conforme opção selecionada. O aceite dos termos representa compromisso com o pagamento integral do plano nas suas respectivas datas de vencimento.
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                        A Rádio TG09 só será ativada após a compensação do primeiro boleto. O plano escolhido possui duração mínima de 6 ou 12 meses, conforme opção selecionada. O aceite dos termos representa compromisso com o pagamento integral do plano nas suas respectivas datas de vencimento.
                     </div>
                 </div>
             </div>
@@ -148,6 +434,123 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Subscription page calculation
+            const plano6 = document.getElementById('plano6');
+            const plano12 = document.getElementById('plano12');
+            const matriz = document.getElementById('matriz');
+            const filiais = document.getElementById('filiais');
+            const num_filiais = document.getElementById('num_filiais');
+            const valor_mensal = document.getElementById('valor_mensal');
+            const valor_total = document.getElementById('valor_total');
+
+            function calculateTotal() {
+                if (!valor_mensal) {
+                    return;
+                }
+
+                let mensal = 200;
+                let numFiliais = 0;
+
+                if (filiais.checked) {
+                    numFiliais = parseInt(num_filiais.value) || 0;
+                }
+
+                mensal += numFiliais * 180;
+
+                let total = mensal;
+                if (plano12.checked) {
+                    total = mensal * 12;
+                } else {
+                    total = mensal * 6;
+                }
+
+                valor_mensal.textContent = `R$ ${mensal.toLocaleString('pt-BR', {minimumFractionDigits: 2})}`;
+                valor_total.textContent = `R$ ${total.toLocaleString('pt-BR', {minimumFractionDigits: 2})}`;
+            }
+
+            if (plano6) {
+                plano6.addEventListener('change', calculateTotal);
+                plano12.addEventListener('change', calculateTotal);
+                matriz.addEventListener('change', calculateTotal);
+                filiais.addEventListener('change', calculateTotal);
+                num_filiais.addEventListener('input', calculateTotal);
+
+                calculateTotal();
+            }
+
+            // Animation observers
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.classList.add('visible');
+                        }, Math.random() * 300);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all animated elements
+            document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right, .scale-in').forEach(el => {
+                observer.observe(el);
+            });
+
+            // Subscription form submission
+            const subscribeForm = document.getElementById('subscribeForm');
+            const formMessages = document.getElementById('form-messages');
+
+            if (subscribeForm) {
+                subscribeForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+
+                    const formData = new FormData(subscribeForm);
+
+                    fetch('send_email.php', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.text())
+                    .then(text => {
+                        formMessages.innerHTML = `<div class="alert alert-success">${text}</div>`;
+                        if (text.includes('Obrigado')) {
+                            subscribeForm.reset();
+                            calculateTotal(); // Recalculate after reset
+                        }
+                    })
+                    .catch(err => {
+                        formMessages.innerHTML = '<div class="alert alert-danger">Oops! Ocorreu um erro.</div>';
+                    });
+                });
+            }
+
+            // Enhanced form interactions
+            document.querySelectorAll('.form-control').forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.parentElement.style.transform = 'scale(1.02)';
+                });
+                
+                input.addEventListener('blur', function() {
+                    this.parentElement.style.transform = 'scale(1)';
+                });
+            });
+
+            // Button hover enhancement
+            document.querySelector('.btn-primary').addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-3px) scale(1.05)';
+            });
+            
+            document.querySelector('.btn-primary').addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+    </script>
 </body>
 </html>
